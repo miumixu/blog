@@ -11,10 +11,13 @@ machine:
 dependencies:
   pre:
     - pip install --upgrade pip
-    - pip install pelican
+    - pip install pelican -r requirements.txt
 
 deployment:
   publish:
     branch: master
     commands:
+      - git config user.name circleci
+      - git config user.email circleci
+      - make html
       - make github
