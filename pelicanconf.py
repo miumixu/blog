@@ -8,6 +8,7 @@ SITEURL = ''
 
 PATH = 'content'
 
+THEME = './theme/alchemy/alchemy'
 TIMEZONE = 'Asia/Tokyo'
 
 DEFAULT_LANG = 'en'
@@ -23,8 +24,7 @@ AUTHOR_FEED_RSS = None
 LINKS = ()
 
 # Social widget
-SOCIAL = (('You can add links in your config file', '#'),
-          ('Another social link', '#'),)
+SOCIAL = ()
 
 DEFAULT_PAGINATION = 10
 
