@@ -60,6 +60,138 @@
         <a href="rss.html" title="Subscribe via RSS"><span class="fa fa-lg fa-rss"></span></a>
     </div></li></ul>
   </nav><div class="main-container" role="main"><div class="main wrapper body clearfix"><article><div class="timestamp postmeta">
+            <span>February 04, 2016</span>
+        </div>
+        <div class="section">
+            <h1><a href="2016/02/04/sicp-reading-girls-meetup-at-online2.html">オンラインSICP読書女子会 #2 (1.1.7~1.1.8)</a></h1>
+<p><a class="reference external" href="http://ladiespp.connpass.com/event/26232/">オンラインSICP読書女子会
+#2</a></p>
+<p>ということで2回目です。</p>
+<p>まずは平方根をニュートン法で求めるという話がありました。</p>
+<div class="highlight-scheme"><div class="highlight"><pre><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">square</span> <span class="nv">x</span><span class="p">)</span> <span class="p">(</span><span class="nb">* </span><span class="nv">x</span> <span class="nv">x</span><span class="p">))</span>
+
+<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">average</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">/ </span><span class="p">(</span><span class="nb">+ </span><span class="nv">x</span> <span class="nv">y</span><span class="p">)</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">improve</span> <span class="nv">guess</span> <span class="nv">x</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">average</span> <span class="nv">guess</span> <span class="p">(</span><span class="nb">/ </span><span class="nv">x</span> <span class="nv">guess</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">good-enough?</span> <span class="nv">guess</span> <span class="nv">x</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">&lt; </span><span class="p">(</span><span class="nb">abs </span><span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nf">square</span> <span class="nv">guess</span><span class="p">)</span> <span class="nv">x</span><span class="p">))</span> <span class="mf">0.001</span><span class="p">))</span>
+
+<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">sqrt-iter</span> <span class="nv">guess</span> <span class="nv">x</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nf">good-enough?</span> <span class="nv">guess</span> <span class="nv">x</span><span class="p">)</span>
+      <span class="nv">guess</span>
+      <span class="p">(</span><span class="nf">sqrt-iter</span> <span class="p">(</span><span class="nf">improve</span> <span class="nv">guess</span> <span class="nv">x</span><span class="p">)</span> <span class="nv">x</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nb">sqrt </span><span class="nv">x</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">sqrt-iter</span> <span class="mf">1.0</span> <span class="nv">x</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="section" id="id1">
+<h2>練習問題 1.6</h2>
+<p>これは前回の範囲で答えることができます。</p>
+<div class="highlight-scheme"><div class="highlight"><pre><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">new-if</span> <span class="nv">predicate</span> <span class="nv">then-clause</span> <span class="nv">else-clause</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">cond </span><span class="p">(</span><span class="nf">predicate</span> <span class="nv">then-clause</span><span class="p">)</span>
+        <span class="p">(</span><span class="k">else </span><span class="nv">else-clause</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>このような <span class="docutils literal"><span class="pre">new-if</span></span> 関数があったとして、次のように <span class="docutils literal"><span class="pre">sqrt-iter</span></span>
+を書いたらどうなるかという話ですね。</p>
+<div class="highlight-scheme"><div class="highlight"><pre><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">sqrt-iter</span> <span class="nv">guess</span> <span class="nv">x</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">new-if</span> <span class="p">(</span><span class="nf">good-enough?</span> <span class="nv">guess</span> <span class="nv">x</span><span class="p">)</span>
+          <span class="nv">guess</span>
+          <span class="p">(</span><span class="nf">sqrt-iter</span> <span class="p">(</span><span class="nf">improve</span> <span class="nv">guess</span> <span class="nv">x</span><span class="p">)</span> <span class="nv">x</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p><span class="docutils literal"><span class="pre">new-if</span></span> 関数というのは特殊形式ではないため、
+述語式が評価された後に結果式と代替式の
+<strong>どちらかを評価するわけではありません</strong> 。
+これは何を意味するかというと、次のような簡単な例を考えてみると理解しやすいです。</p>
+<div class="highlight-scheme"><div class="highlight"><pre><span class="p">(</span><span class="nf">new-if</span> <span class="no">#t</span>
+        <span class="p">(</span><span class="nf">println</span> <span class="s">"true"</span><span class="p">)</span>
+        <span class="p">(</span><span class="nf">println</span> <span class="s">"false"</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>この例をREPLで評価してみると次のような出力を得ることができます。</p>
+<div class="highlight-scheme"><div class="highlight"><pre><span class="s">"true"</span>
+<span class="s">"false"</span>
+</pre></div>
+</div>
+<p>これは <span class="docutils literal"><span class="pre">new-if</span></span> 関数が <span class="docutils literal"><span class="pre">if</span></span> 特殊形式のように
+<strong>述語式を評価した後に結果式と代替式のどちらかのみを評価する</strong>
+わけではないということを意味しています。</p>
+<p>また、 <span class="docutils literal"><span class="pre">sqrt-iter</span></span>
+関数は再帰関数であるという性質から、平方根を計算しようとした場合に無限ループに陥いることは明白です。</p>
+</div>
+<div class="section" id="id2">
+<h2>練習問題 1.7</h2>
+<p>どのような数のときにうまくいかないかという話ですね。</p>
+<p>(私はあまりよくわからなかったので後で勉強して補記するかもしれないです)</p>
+<div class="highlight-scheme"><div class="highlight"><pre><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">average</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">/ </span><span class="p">(</span><span class="nb">+ </span><span class="nv">x</span> <span class="nv">y</span><span class="p">)</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">improve</span> <span class="nv">guess</span> <span class="nv">x</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">average</span> <span class="nv">guess</span> <span class="p">(</span><span class="nb">/ </span><span class="nv">x</span> <span class="nv">guess</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">good-enough?</span> <span class="nv">guess</span> <span class="nv">x</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">&lt; </span><span class="p">(</span><span class="nb">abs </span><span class="p">(</span><span class="nb">- </span><span class="nv">guess</span> <span class="p">(</span><span class="nf">improve</span> <span class="nv">guess</span> <span class="nv">x</span><span class="p">)))</span> <span class="mf">0.001</span><span class="p">))</span>
+
+<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">sqrt-iter</span> <span class="nv">guess</span> <span class="nv">x</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nf">good-enough?</span> <span class="nv">guess</span> <span class="nv">x</span><span class="p">)</span>
+      <span class="nv">guess</span>
+      <span class="p">(</span><span class="nf">sqrt-iter</span> <span class="p">(</span><span class="nf">improve</span> <span class="nv">guess</span> <span class="nv">x</span><span class="p">)</span> <span class="nv">x</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nb">sqrt </span><span class="nv">x</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">sqrt-iter</span> <span class="mf">1.0</span> <span class="nv">x</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>練習問題 1.8</h2>
+<p>少し悩むけど、基本的に答えは書いてあるようなものなので、今迄の平方根を計算するプログラムを修正したら動きます。</p>
+<p>具体的には <span class="docutils literal"><span class="pre">improve</span></span> 関数に問題に書いてある式に落とし込んで、
+<span class="docutils literal"><span class="pre">good-enough?</span></span>
+関数も微修正します。(何を元にこの問題を解くかで多少変わりますが)</p>
+<div class="highlight-scheme"><div class="highlight"><pre><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">improve</span> <span class="nv">guess</span> <span class="nv">x</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">/ </span><span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nb">/ </span><span class="nv">x</span> <span class="p">(</span><span class="nf">square</span> <span class="nv">guess</span><span class="p">))</span>
+        <span class="p">(</span><span class="nb">* </span><span class="mi">2</span> <span class="nv">guess</span><span class="p">))</span>
+     <span class="mi">3</span><span class="p">))</span>
+
+<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">good-enough?</span> <span class="nv">guess</span> <span class="nv">x</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">&lt; </span><span class="p">(</span><span class="nb">abs </span><span class="p">(</span><span class="nb">- </span><span class="nv">guess</span> <span class="p">(</span><span class="nf">improve</span> <span class="nv">guess</span> <span class="nv">x</span><span class="p">)))</span> <span class="mf">0.001</span><span class="p">))</span>
+
+<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">cbrt-iter</span> <span class="nv">guess</span> <span class="nv">x</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nf">good-enough?</span> <span class="nv">guess</span> <span class="nv">x</span><span class="p">)</span>
+      <span class="nv">guess</span>
+      <span class="p">(</span><span class="nf">cbrt-iter</span> <span class="p">(</span><span class="nf">improve</span> <span class="nv">guess</span> <span class="nv">x</span><span class="p">)</span> <span class="nv">x</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">cbrt</span> <span class="nv">x</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">cbrt-iter</span> <span class="mf">1.0</span> <span class="nv">x</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>結構、チャットでやるとカオス :black_joker: で楽しかったです。
+という感じで2回目でした :smirk_cat:</p>
+</div>
+
+        </div>
+        <div class="postmeta">
+        <div class="author">
+            <span>Posted by miumixu</span>
+        </div>
+        <div class="categories">
+            <span>
+                Filed under:
+                <a href="categories/sicp.html">SICP</a></span>
+        </div>
+        <div class="tags">
+            <span>
+                Tags:
+                <a href="tags/オンラインsicp読書女子会.html">オンラインSICP読書女子会</a>, <a href="tags/sicp.html">SICP</a></span>
+        </div>
+        <div class="comments">
+            <a href="http://miumixu.github.io/blog/2016/02/04/sicp-reading-girls-meetup-at-online2.html#disqus_thread" data-disqus-identifier="2016/02/04/sicp-reading-girls-meetup-at-online2">Leave a comment</a>
+        </div></div><div class="separator post_separator"></div><div class="timestamp postmeta">
             <span>February 03, 2016</span>
         </div>
         <div class="section">
@@ -217,6 +349,8 @@
     </div></article><aside class="sidebar"><section><div class="widget">
     <h1>Recent Posts</h1>
     <ul><li>
+            <a href="2016/02/04/sicp-reading-girls-meetup-at-online2.html">オンラインSICP読書女子会 #2 (1.1.7~1.1.8)</a>
+        </li><li>
             <a href="2016/02/03/sicp-reading-girls-meetup-at-online.html">オンラインSICP読書女子会 #1 (1.1.1~1.1.6)</a>
         </li><li>
             <a href="2016/02/03/新しいブログはじめました.html">新しいブログはじめました</a>
