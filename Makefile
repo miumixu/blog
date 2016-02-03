@@ -1,6 +1,6 @@
 GITHUB_PAGES_BRANCH = gh-pages
 BUILD_PATH = blog/html
-COMMIT_MESSAGE = 'generate my blog'
+COMMIT_MESSAGE = 'generate my blog :honey_pot:'
 
 build:
 	tinker -b -q
