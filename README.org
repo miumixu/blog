@@ -1,1 +1,11 @@
+* My Tech Blog :tada:
+
 http://miumixu.github.io/blog/
+
+** Using theme
+
+https://pypi.python.org/pypi/sphinxjp.themes.tinkerdahlia
+
+#+begin_src python
+pip install sphinxjp.themes.tinkerdahlia
+#+end_src
