@@ -1,4 +1,4 @@
-greeneral:
+general:
   branches:
     ignore:
       - gh-pages
