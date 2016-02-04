@@ -1,0 +1,20 @@
+greeneral:
+  branches:
+    ignore:
+      - gh-pages
+
+machine:
+  timezone: Asia/Tokyo
+  python:
+    version: 3.5.1
+
+dependencies:
+  pre:
+    - pip install tinkerer
+    - pip install sphinxjp.themes.tinkerdahlia
+
+deployment:
+  publish:
+    branch: master
+    commands:
+      - make github
