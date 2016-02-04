@@ -129,7 +129,7 @@
       (cbrt-iter 1.0 x))
 
 結構、チャットでやるとカオス :black_joker: で楽しかったです。
-という感じで2回目でした :smirk_cat:
+という感じで2回目でした :smiley_cat:
 
 .. author:: default
 .. categories:: SICP
